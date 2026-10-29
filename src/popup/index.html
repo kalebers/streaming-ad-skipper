@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Streaming Ad Skipper</title>
+  </head>
+  <body>
+    <main>
+      <h1>Streaming Ad Skipper</h1>
+      <p class="status">Conservative, local-only controls.</p>
+      <form id="settings-form">
+        <label><input id="enabled" type="checkbox" /> Enable automation</label>
+        <label><input id="primeVideo" type="checkbox" /> Amazon Prime Video</label>
+        <label><input id="automaticSkip" type="checkbox" /> Automatically use verified skip controls</label>
+        <label><input id="muteDuringAds" type="checkbox" /> Mute during confirmed ads</label>
+        <label><input id="diagnostics" type="checkbox" /> Diagnostic logging</label>
+        <button type="submit">Save settings</button>
+      </form>
+      <p id="support">Prime Video detection is experimental and currently diagnostic-only.</p>
+      <a href="help.html" target="_blank" rel="noreferrer">Read help and limitations</a>
+    </main>
+    <script type="module" src="./popup.ts"></script>
+  </body>
+</html>

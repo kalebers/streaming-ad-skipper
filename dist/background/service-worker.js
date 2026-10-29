@@ -1,0 +1,1 @@
+chrome.runtime.onInstalled.addListener(()=>{chrome.storage.local.get("settings").then(e=>{if(!e.settings)return chrome.storage.local.set({settings:{enabled:!0,services:{primeVideo:!0},automaticSkip:!0,muteDuringAds:!1,diagnostics:!1}})})});

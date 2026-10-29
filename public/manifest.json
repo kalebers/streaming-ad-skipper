@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Streaming Ad Skipper",
+  "version": "0.1.0",
+  "description": "Conservative, local-only automation for verified streaming player controls.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.primevideo.com/*", "https://primevideo.com/*"],
+  "background": { "service_worker": "background/service-worker.js", "type": "module" },
+  "action": { "default_popup": "popup.html", "default_title": "Streaming Ad Skipper" },
+  "content_scripts": [
+    {
+      "matches": ["https://www.primevideo.com/*", "https://primevideo.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "popup.html"
+}

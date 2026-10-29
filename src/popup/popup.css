@@ -1,0 +1,9 @@
+body { min-width: 280px; margin: 0; font: 14px system-ui, sans-serif; color: #172033; }
+main { padding: 16px; }
+h1 { margin: 0 0 6px; font-size: 18px; }
+.status, #support { color: #4a5872; font-size: 12px; }
+form { display: grid; gap: 10px; margin: 14px 0; }
+label { display: flex; gap: 8px; align-items: flex-start; }
+button { padding: 8px 12px; cursor: pointer; }
+:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
+a { color: #1d4ed8; }

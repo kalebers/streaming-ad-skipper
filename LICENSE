@@ -1,0 +1,43 @@
+KalebeRS Private Source and Contribution License
+Copyright (c) 2026 KalebeRS
+
+1. Ownership
+
+This software and its documentation ("Software") are proprietary to KalebeRS.
+All rights not expressly granted by this license are reserved by KalebeRS.
+
+2. Limited permission
+
+You may view the Software and make local, temporary copies only as reasonably
+necessary to inspect it, evaluate it, or prepare and submit a contribution
+through a pull request to the project's repository.
+
+3. Contributions through pull requests
+
+By submitting a pull request, patch, issue, or other contribution to this
+project, you grant KalebeRS a perpetual, worldwide, non-exclusive, royalty-free
+license to use, reproduce, modify, adapt, publish, distribute, sublicense, and
+incorporate that contribution into the Software and related projects. You
+represent that you have the right to grant this license.
+
+Submitting a contribution does not grant you or anyone else permission to
+reproduce, redistribute, sell, sublicense, publish, or otherwise use the
+Software outside the limited permission in section 2.
+
+4. Prohibited use
+
+Without prior written permission from KalebeRS, you may not:
+
+- reproduce or redistribute the Software or substantial portions of it;
+- publish, mirror, sublicense, sell, or include the Software in another product;
+- use the Software commercially or provide it as a service; or
+- remove this license or copyright notices.
+
+5. No warranty
+
+The Software is provided "AS IS", without warranty of any kind, express or
+implied. To the maximum extent permitted by law, KalebeRS is not liable for any
+claim, damages, or other liability arising from the Software or its use.
+
+For permissions not granted by this license, contact KalebeRS through the
+project repository.
