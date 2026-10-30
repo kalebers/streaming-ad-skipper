@@ -13,7 +13,7 @@ export default defineConfig({
       input: {
         content: resolve(root, "src/content/index.ts"),
         serviceWorker: resolve(root, "src/background/service-worker.ts"),
-        popup: resolve(root, "src/popup/index.html")
+        popup: resolve(root, "src/popup/popup.ts")
       },
       output: {
         entryFileNames: (chunk) =>
