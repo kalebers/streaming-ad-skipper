@@ -29,7 +29,8 @@ npm run build
 ```
 
 Load `dist/` at `chrome://extensions` with **Developer mode** and **Load
-unpacked**. `npm run dev` rebuilds on changes.
+unpacked**. The production build should contain `dist/manifest.json` and
+`dist/popup/index.html`. `npm run dev` rebuilds on changes.
 
 ## Privacy and permissions
 
