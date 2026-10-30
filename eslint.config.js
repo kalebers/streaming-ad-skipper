@@ -18,7 +18,7 @@ const extensionGlobals = {
 };
 
 export default [
-  { ignores: ["dist", "node_modules"] },
+  { ignores: ["dist", "node_modules", "prime_video_html_script.js","prime-video-ad-capture.json"] },
   eslint.configs.recommended,
   {
     files: ["**/*.ts"],
