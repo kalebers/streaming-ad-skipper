@@ -2,6 +2,7 @@ import type { StreamingAdapter } from "./types";
 import type { ClassificationResult, Evidence } from "../shared/types";
 
 const skipLabelPattern = /^skip\s+(ad|advertisement)$/i;
+const adPlayingLabelPattern = /^Ad playing\. Content resumes in /i;
 
 function accessibleLabel(element: HTMLElement): string {
   return (
@@ -26,22 +27,34 @@ export class PrimeVideoAdapter implements StreamingAdapter {
   }
 
   classify(root: ParentNode, _video: HTMLVideoElement): ClassificationResult {
-    const control = this.findVerifiedSkipControl(root);
     const observedAt = Date.now();
-    const evidence: Evidence[] = control
-      ? [
-          {
-            id: "prime-video-skip-ad-control",
-            kind: "dom-label",
-            detail: "Visible enabled control has an exact Skip Ad label",
-            confirmed: true,
-            observedAt
-          }
-        ]
-      : [];
+    const adIndicator = this.findAdIndicator(root);
+    const control = this.findVerifiedSkipControl(root);
+    const evidence: Evidence[] = [];
+
+    if (adIndicator) {
+      evidence.push({
+        id: "prime-video-ad-playing-indicator",
+        kind: "dom-label",
+        detail: "Prime Video exposes an accessible Ad playing status with a remaining-time indicator",
+        confirmed: true,
+        observedAt
+      });
+    }
+
+    if (control) {
+      evidence.push({
+        id: "prime-video-skip-ad-control",
+        kind: "dom-label",
+        detail: "Visible enabled control has an exact Skip Ad label",
+        confirmed: true,
+        observedAt
+      });
+    }
+
     return {
-      classification: control ? "advertisement" : "unknown",
-      confidence: control ? 1 : 0,
+      classification: adIndicator ? "advertisement" : "unknown",
+      confidence: adIndicator ? 1 : 0,
       evidence,
       observedAt
     };
@@ -54,6 +67,16 @@ export class PrimeVideoAdapter implements StreamingAdapter {
     return candidates
       .map((element) => ({ element, label: accessibleLabel(element) }))
       .find(({ element, label }) => skipLabelPattern.test(label) && this.isVisibleEnabled(element)) ?? null;
+  }
+
+  private findAdIndicator(root: ParentNode): HTMLElement | null {
+    const labelled = Array.from(root.querySelectorAll<HTMLElement>("[aria-label]")).find(
+      (element) => adPlayingLabelPattern.test(element.getAttribute("aria-label") ?? "")
+    );
+    if (labelled && this.isVisibleEnabled(labelled)) return labelled;
+
+    const timer = root.querySelector<HTMLElement>(".atvwebplayersdk-ad-timer-remaining-time");
+    return timer && this.isVisibleEnabled(timer) ? timer : null;
   }
 
   private isVisibleEnabled(element: HTMLElement): boolean {

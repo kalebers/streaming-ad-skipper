@@ -12,7 +12,8 @@ diagnostic-only**. The project deliberately contains no fabricated Prime Video
 selectors or network endpoints. No automatic skipping or muting is enabled by
 the current adapter until a real playback session establishes reliable,
 observable signals. The current build can activate only an exact, visible, enabled
-`Skip Ad` control when Prime Video exposes one; it does not seek or remove
+`Skip Ad` control when Prime Video exposes one. If enabled, it can mute a
+confirmed ad and restore the previous audio state; it does not seek or remove
 same-stream advertising.
 
 Netflix is listed as a future adapter but is not enabled or supported.

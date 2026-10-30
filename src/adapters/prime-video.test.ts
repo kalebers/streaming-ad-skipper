@@ -24,9 +24,25 @@ describe("PrimeVideoAdapter", () => {
   });
 
   it("classifies an exact visible Skip Ad control as an advertisement", () => {
+    const indicator = document.createElement("div");
+    indicator.setAttribute(
+      "aria-label",
+      "Ad playing. Content resumes in 0 minutes and 25 seconds."
+    );
     const button = document.createElement("button");
     button.setAttribute("aria-label", "Skip Ad");
-    document.body.append(button);
+    document.body.append(indicator, button);
+    vi.spyOn(indicator, "getBoundingClientRect").mockReturnValue({
+      width: 100,
+      height: 20,
+      top: 0,
+      left: 0,
+      right: 100,
+      bottom: 20,
+      x: 0,
+      y: 0,
+      toJSON: () => ({})
+    });
     vi.spyOn(button, "getBoundingClientRect").mockReturnValue({
       width: 100,
       height: 30,
@@ -43,6 +59,33 @@ describe("PrimeVideoAdapter", () => {
 
     expect(result.classification).toBe("advertisement");
     expect(result.evidence[0]?.confirmed).toBe(true);
+  });
+
+  it("classifies the captured Prime Video ad indicator", () => {
+    const indicator = document.createElement("div");
+    indicator.setAttribute(
+      "aria-label",
+      "Ad playing. Content resumes in 0 minutes and 25 seconds."
+    );
+    document.body.append(indicator);
+    vi.spyOn(indicator, "getBoundingClientRect").mockReturnValue({
+      width: 100,
+      height: 20,
+      top: 0,
+      left: 0,
+      right: 100,
+      bottom: 20,
+      x: 0,
+      y: 0,
+      toJSON: () => ({})
+    });
+
+    const result = adapter.classify(document, document.createElement("video"));
+
+    expect(result.classification).toBe("advertisement");
+    expect(result.evidence.map((item) => item.id)).toContain(
+      "prime-video-ad-playing-indicator"
+    );
   });
 
   it("does not match ordinary controls with similar text", () => {
