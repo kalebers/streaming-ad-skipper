@@ -4,9 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Streaming Ad Skipper</title>
-    <script type="module" crossorigin src="/popup.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/storage-BOZJgQIs.js">
-    <link rel="stylesheet" crossorigin href="/assets/popup-DoY9-Ffd.css">
+    <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
     <main>
@@ -20,8 +18,9 @@
         <label><input id="diagnostics" type="checkbox" /> Diagnostic logging</label>
         <button type="submit">Save settings</button>
       </form>
-      <p id="support">Prime Video detection is experimental and currently diagnostic-only.</p>
-      <a href="../help.html" target="_blank" rel="noreferrer">Read help and limitations</a>
+      <p id="support">Automatic skipping activates only for a visible, enabled “Skip Ad” control.</p>
+      <a href="help.html" target="_blank" rel="noreferrer">Read help and limitations</a>
     </main>
+    <script type="module" src="popup.js"></script>
   </body>
 </html>

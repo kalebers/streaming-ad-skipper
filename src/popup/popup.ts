@@ -1,5 +1,4 @@
 import { loadSettings, saveSettings } from "../settings/storage";
-import "./popup.css";
 
 const ids = ["enabled", "primeVideo", "automaticSkip", "muteDuringAds", "diagnostics"] as const;
 type SettingId = (typeof ids)[number];

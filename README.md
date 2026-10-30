@@ -11,7 +11,9 @@ The initial adapter targets `primevideo.com` and is **experimental and
 diagnostic-only**. The project deliberately contains no fabricated Prime Video
 selectors or network endpoints. No automatic skipping or muting is enabled by
 the current adapter until a real playback session establishes reliable,
-observable signals.
+observable signals. The current build can activate only an exact, visible, enabled
+`Skip Ad` control when Prime Video exposes one; it does not seek or remove
+same-stream advertising.
 
 Netflix is listed as a future adapter but is not enabled or supported.
 
@@ -30,7 +32,8 @@ npm run build
 
 Load `dist/` at `chrome://extensions` with **Developer mode** and **Load
 unpacked**. The production build should contain `dist/manifest.json` and
-`dist/popup/index.html`. `npm run dev` rebuilds on changes.
+`dist/popup.html`. `popup.html` and `popup.css` are copied from `public/`, and
+the popup logic is built as `dist/popup.js`. `npm run dev` rebuilds on changes.
 
 ## Privacy and permissions
 
