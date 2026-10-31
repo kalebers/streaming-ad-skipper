@@ -53,7 +53,7 @@ async function loadContentSettings(): Promise<Settings> {
 async function bootstrap(): Promise<void> {
   const adapter = adapterFor(new URL(window.location.href));
   if (!adapter) return;
-  const settings = await loadContentSettings();
+  let settings = await loadContentSettings();
   if (!settings.enabled || !settings.services.primeVideo) return;
   const engine = new DetectionEngine(adapter);
   let currentVideo: HTMLVideoElement | null = null;
@@ -63,10 +63,17 @@ async function bootstrap(): Promise<void> {
   let mutedVideo: HTMLVideoElement | null = null;
   const audioState: AudioMuteState = { previousMuted: null };
   const log = (entry: Parameters<typeof recordDiagnostic>[0]): void => {
-    if (settings.diagnostics) recordDiagnostic(entry);
+    if (!settings.diagnostics) return;
+    recordDiagnostic(entry);
+    console.info("[Streaming Ad Skipper]", entry);
   };
 
   const inspect = (): void => {
+    if (!settings.enabled || !settings.services.primeVideo) {
+      restoreAfterAdvertisement(mutedVideo, audioState);
+      mutedVideo = null;
+      return;
+    }
     const video = adapter.findPlayer(document);
     if (!video) {
       restoreAfterAdvertisement(mutedVideo, audioState);
@@ -126,12 +133,20 @@ async function bootstrap(): Promise<void> {
   observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
   interval = window.setInterval(inspect, 2_000);
   inspect();
+  const settingsChanged = (changes: { [key: string]: chrome.storage.StorageChange }, area: string): void => {
+    if (area !== "local" || !changes.settings) return;
+    settings = validateContentSettings(changes.settings.newValue);
+  };
+  chrome.storage.onChanged.addListener(settingsChanged);
   window.addEventListener("pagehide", () => {
     observer?.disconnect();
     if (interval !== undefined) window.clearInterval(interval);
     restoreAfterAdvertisement(mutedVideo, audioState);
+    chrome.storage.onChanged.removeListener(settingsChanged);
     adapter.cleanup();
   }, { once: true });
 }
 
-void bootstrap();
+void bootstrap().catch((error: unknown) => {
+  console.error("[Streaming Ad Skipper] Failed to start:", error);
+});

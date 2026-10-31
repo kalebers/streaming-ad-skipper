@@ -24,6 +24,13 @@ async function init(): Promise<void> {
       automaticSkip: getChecked("automaticSkip"),
       muteDuringAds: getChecked("muteDuringAds"),
       diagnostics: getChecked("diagnostics")
+    }).then(() => {
+      const saved = document.getElementById("saved");
+      if (saved) saved.textContent = "Settings saved.";
+    }).catch((error: unknown) => {
+      console.error("Could not save settings:", error);
+      const saved = document.getElementById("saved");
+      if (saved) saved.textContent = "Could not save settings.";
     });
   });
 }

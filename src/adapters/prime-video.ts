@@ -73,10 +73,20 @@ export class PrimeVideoAdapter implements StreamingAdapter {
     const labelled = Array.from(root.querySelectorAll<HTMLElement>("[aria-label]")).find(
       (element) => adPlayingLabelPattern.test(element.getAttribute("aria-label") ?? "")
     );
-    if (labelled && this.isVisibleEnabled(labelled)) return labelled;
+    if (labelled && this.isPresent(labelled)) return labelled;
 
     const timer = root.querySelector<HTMLElement>(".atvwebplayersdk-ad-timer-remaining-time");
-    return timer && this.isVisibleEnabled(timer) ? timer : null;
+    return timer && this.isPresent(timer) ? timer : null;
+  }
+
+  private isPresent(element: HTMLElement): boolean {
+    const style = window.getComputedStyle(element);
+    return (
+      element.isConnected &&
+      style.visibility !== "hidden" &&
+      style.display !== "none" &&
+      !element.hasAttribute("hidden")
+    );
   }
 
   private isVisibleEnabled(element: HTMLElement): boolean {
