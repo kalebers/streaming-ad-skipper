@@ -3,6 +3,7 @@ import tsPlugin from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 
 const browserGlobals = {
+  console: "readonly",
   document: "readonly",
   window: "readonly",
   MutationObserver: "readonly",
